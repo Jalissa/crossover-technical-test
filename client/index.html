@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
 	<title>Crossover Video Portal</title>
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="components/angular-cookies/angular-cookies.js"></script>
+    <script src = "http://www.myersdaily.org/joseph/javascript/md5.js"></script>
+    <script src="js/constants.js"></script>
+    <link href="css/app.css" rel="stylesheet" type="text/css" />
+    <link href="components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<h2>Crossover Video Portal</h2>
-	<hr />
-	If you see this page, it means you have configured the app correctly. Put your client side code in /client folder and the application will start serving your code.
+    <div class="container">
+        <h2 class="text-center">Crossover Video Portal</h2>
+        <ui-view></ui-view>
+    </div>
+
+
+    <script src="components/jquery/dist/jquery.js"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/routes.js"></script>
+	<script src="js/directives.js"></script>
+	<script src="js/services.js"></script>
 </body>
 </html>
