@@ -29,9 +29,9 @@ function ($scope, $state, userService) {
 .controller('homeController', ['$scope','userService','videoService',
 
     function($scope, userService, videoService){
-
         $scope.videos = [];
        var sessionId = userService.getAuthUser().sessionId;
+
         videoService.get({skip:0,limit:10, sessionId: sessionId},
             function(response){
                 $scope.videos = response.data;

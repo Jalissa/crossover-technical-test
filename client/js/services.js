@@ -1,19 +1,19 @@
 angular.module('app.services', ['ngCookies'])
 
-.service('userService', ['$http','$cookies', function($http, $cookies){
+.service('userService', ['$http','$cookieStore', function($http, $cookieStore){
 
     this.login = function login(user, onSuccess, onError){
         user.password = md5(user.password);
         $http.post('/user/auth', user)
             .then(function success(response){
                 var authUser = response.data;
-                $cookies.put('authUser',authUser);
+                $cookieStore.put('authUser',authUser);
                 onSuccess(authUser);
             }, onError);
     }
 
     this.getAuthUser = function getAuthUser(){
-        return $cookies.get('authUser');
+        return $cookieStore.get('authUser');
     }
 }])
 
