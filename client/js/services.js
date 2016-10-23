@@ -27,4 +27,15 @@ angular.module('app.services', ['ngCookies'])
         }).then(onSuccess, onError);
     }
 
+    this.getRating = function getRating(video){
+        var ratingSum = 0;
+
+        for(var j = 0; j < video.ratings.length; j++) {
+            ratingSum += video.ratings[j];
+        }
+        var ratingAvg = ratingSum / video.ratings.length;
+        return ratingAvg;
+
+    }
+
 }]);

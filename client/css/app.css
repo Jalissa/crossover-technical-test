@@ -8,3 +8,13 @@
 .form-signin-heading {
      margin-bottom: 10px;
 }
+
+.video-description{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.video{
+    cursor: pointer;
+}

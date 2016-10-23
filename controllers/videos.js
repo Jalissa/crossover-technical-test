@@ -7,7 +7,6 @@ videos.get = function (req, res) {
 	
 	var skip = req.query.skip;
 	var limit = req.query.limit;
-
 	var videosData = videoModel.get(skip, limit);
 	videosData.then(function(data){
 		var response = {};
