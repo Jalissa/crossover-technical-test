@@ -1,6 +1,6 @@
 angular.module('app.directives', [])
 
-.directive('scroll', ['$window','$timeout', function($window, $timeout){
+.directive('scroll', ['$window','$timeout', function($window){
     return {
         scope:{
           scroll: '&'
@@ -9,10 +9,7 @@ angular.module('app.directives', [])
 
             angular.element($window).bind('scroll', function () {
                 if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                    $timeout(function(){
-                        scope.scroll();
-                    },300);
-
+                    scope.$apply(scope.scroll);
                 }
             });
         }

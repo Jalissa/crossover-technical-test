@@ -42,6 +42,19 @@ function ($scope, $state, userService) {
             loadVideos(skip, limit);
         }
 
+        $scope.play = function play(e){
+            var video = e.target;
+            $.each($('.videoTag').get(), function(index, value){
+                value.pause();
+            })
+            if(video.paused){
+                video.play();
+            }else{
+                video.pause();
+            }
+
+        }
+
         function loadVideos(skip, limit){
             var sessionId = userService.getAuthUser().sessionId;
             videoService.get({skip: skip,limit:limit, sessionId: sessionId},
