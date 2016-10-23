@@ -1,8 +1,11 @@
-<div  class="video-container" scroll="loadVideos()">
+<div class="alert alert-danger" ng-show="message" role="alert">{{message}}</div>
+<div ng-hide="message" class="video-container" scroll="loadVideos()">
     <div class="col-md-6" ng-repeat="video in videos track by video._id" >
         <div class="panel panel-success"   >
             <div class="panel-heading video-title">
-                <h3 class="panel-title text-center">{{video.name}} </h3>
+                <a ui-sref="detail({videoId : video._id})">
+                    <h3 class="panel-title text-center">{{video.name}} </h3>
+                </a>
             </div>
             <div class="panel-body">
                 <div class="embed-responsive embed-responsive-16by9">

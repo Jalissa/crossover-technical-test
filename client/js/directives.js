@@ -14,4 +14,12 @@ angular.module('app.directives', [])
             });
         }
     };
+}])
+
+.directive('logout',[function(){
+    return {
+        restrict: 'E',
+        templateUrl: '../logout.html',
+        controller: ''
+    };
 }]);

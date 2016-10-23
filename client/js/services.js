@@ -15,6 +15,17 @@ angular.module('app.services', ['ngCookies'])
     this.getAuthUser = function getAuthUser(){
         return $cookieStore.get('authUser');
     }
+
+    this.logout = function logout(query, onSuccess, onError){
+        $http({
+            url: '/user/logout',
+            method: "GET",
+            params: query
+        }).then(function(response){
+            $cookieStore.remove('authUser');
+            onSuccess(response);
+        }, onError);
+    }
 }])
 
 .service('videoService', ['$http', function($http){
@@ -36,6 +47,14 @@ angular.module('app.services', ['ngCookies'])
         var ratingAvg = ratingSum / video.ratings.length;
         return ratingAvg;
 
+    }
+
+    this.getOne = function getOne(query, onSuccess, onError){
+        $http({
+            url: '/video',
+            method: "GET",
+            params: query
+        }).then(onSuccess, onError);
     }
 
 }]);

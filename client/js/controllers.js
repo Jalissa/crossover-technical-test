@@ -1,5 +1,6 @@
 angular.module('app.controllers', [])
-  
+
+    //Controller to handle login and logout
 .controller('userController', ['$scope', '$state', 'userService',
 function ($scope, $state, userService) {
     $scope.message = null;
@@ -19,6 +20,14 @@ function ($scope, $state, userService) {
             });
     }
 
+    $scope.logout = function logout(){
+        userService.logout({
+            sessionId:  userService.getAuthUser().sessionId
+        }, function(response) {
+            $state.go('login');
+        });
+    }
+
     function resetUser(user){
         user.username = null;
         user.password = null;
@@ -26,9 +35,9 @@ function ($scope, $state, userService) {
 
 }])
 
-.controller('homeController', ['$scope','userService','videoService',
+.controller('homeController', ['$scope','userService','videoService', '$stateParams',
 
-    function($scope, userService, videoService){
+    function($scope, userService, videoService, $stateParams){
 
         $scope.videos=[];
 
@@ -59,6 +68,10 @@ function ($scope, $state, userService) {
             var sessionId = userService.getAuthUser().sessionId;
             videoService.get({skip: skip,limit:limit, sessionId: sessionId},
                 function(response){
+                    if(response.data.status === constants.status.error){
+                        $scope.message = response.data.error;
+                        return;
+                    }
                     videos = response.data.data;
                     for(var i = 0; i < videos.length; i++) {
                         videos[i].ratingAvg = videoService.getRating(videos[i]);
@@ -66,7 +79,7 @@ function ($scope, $state, userService) {
                     }
                 },
                 function (err){
-                    console.log(err);
+                    $scope.message = err.data.error;
                 }
             );
 
@@ -75,5 +88,53 @@ function ($scope, $state, userService) {
 
 }])
 
+.controller('detailController', ['$scope','userService','videoService', '$stateParams',
+
+function($scope, userService, videoService, $stateParams){
+
+    getOne();
+
+    $scope.play = function play(e){
+        var video = e.target;
+        if(video.paused){
+            video.play();
+        }else{
+            video.pause();
+        }
+
+    }
+
+    function getOne(){
+        videoService.getOne({
+           sessionId: userService.getAuthUser().sessionId,
+           videoId: $stateParams.videoId
+        }, function(response){
+            if(response.data.status === constants.status.error){
+                $scope.message = response.data.error;
+                return;
+            }
+
+            $scope.video = response.data.data;
+        }, function(err){
+            $scope.message = err.data.error;
+        });
+    }
+
+
+}])
+
+.run(['$rootScope', '$state', 'userService',
+    function($rootScope, $state, userService) {
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            var requiresLogin = toState.requiresLogin;
+            if (requiresLogin && !userService.getAuthUser().sessionId) {
+                event.preventDefault();
+                $state.go('login');
+            }
+
+        });
+    }
+])
 
  

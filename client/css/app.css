@@ -18,3 +18,12 @@
 .video-title{
     cursor: pointer;
 }
+
+.video-title a{
+    text-decoration: none;
+}
+
+.detail-video-container{
+    height: 800px;
+    overflow: scroll;
+}

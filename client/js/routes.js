@@ -11,7 +11,15 @@ angular.module('app.routes', ['ui.router'])
       .state('home',{
         url:'/home',
         templateUrl: 'home.html',
-        controller: 'homeController'
+        controller: 'homeController',
+          requiresLogin:true
+  })
+
+      .state('detail',{
+          url:'/detail/{videoId}',
+          templateUrl:'detail.html',
+          controller:'detailController',
+          requiresLogin:true
   })
 
 
