@@ -4,6 +4,7 @@ angular.module('app.controllers', [])
 .controller('userController', ['$scope', '$state', 'userService',
 function ($scope, $state, userService) {
     $scope.message = null;
+
     $scope.login = function login(user){
         userService.login(user,
             function(authUser){
@@ -19,8 +20,9 @@ function ($scope, $state, userService) {
                 $scope.message = err.data.error;
             });
     }
-
+    $scope.username = userService.getAuthUser() ? userService.getAuthUser().username : '';
     $scope.logout = function logout(){
+
         userService.logout({
             sessionId:  userService.getAuthUser().sessionId
         }, function(response) {
@@ -35,6 +37,7 @@ function ($scope, $state, userService) {
 
 }])
 
+    //Home Controller deals with video lazy loading in home page
 .controller('homeController', ['$scope','userService','videoService', '$stateParams',
 
     function($scope, userService, videoService, $stateParams){
@@ -44,18 +47,29 @@ function ($scope, $state, userService) {
         var skip = 0;
         var limit = 10;
 
+        //loads first 10 videos by default
         loadVideos(skip, limit);
 
+        //state params to reuse home view into detail view
+        $scope.showOthers = $stateParams.showOthers;
+        $scope.enablePlay = $stateParams.enablePlay;
+        $scope.videoClass = $stateParams.videoClass;
+        $scope.window = $stateParams.window;
+
+        //function called to get more videos
         $scope.loadVideos = function (){
+            //to get the next 10 not loaded videos
             skip += 10;
             loadVideos(skip, limit);
         }
 
         $scope.play = function play(e){
             var video = e.target;
-            $.each($('.videoTag').get(), function(index, value){
+            //to avoid playing more than one video simultaneously
+            $.each($('.videoTag').not('#'+$(video)[0].id).get(), function(index, value){
                 value.pause();
-            })
+
+            });
             if(video.paused){
                 video.play();
             }else{
@@ -88,12 +102,20 @@ function ($scope, $state, userService) {
 
 }])
 
+    //Detail controller handles detail view
 .controller('detailController', ['$scope','userService','videoService', '$stateParams',
 
 function($scope, userService, videoService, $stateParams){
 
+    //state params to reuse home view into detail view
+    $scope.showOthers = $stateParams.showOthers;
+    $scope.enablePlay = $stateParams.enablePlay;
+    $scope.videoClass = $stateParams.videoClass;
+    $scope.window = $stateParams.window;
+
     getOne();
 
+    //to play selected video
     $scope.play = function play(e){
         var video = e.target;
         if(video.paused){
@@ -113,8 +135,10 @@ function($scope, userService, videoService, $stateParams){
                 $scope.message = response.data.error;
                 return;
             }
+            var oneVideo = response.data.data;
+            oneVideo.ratingAvg = videoService.getRating(oneVideo);
+            $scope.video = oneVideo;
 
-            $scope.video = response.data.data;
         }, function(err){
             $scope.message = err.data.error;
         });
@@ -125,10 +149,10 @@ function($scope, userService, videoService, $stateParams){
 
 .run(['$rootScope', '$state', 'userService',
     function($rootScope, $state, userService) {
-
+        // to validate there's an auth user navigation through the site
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             var requiresLogin = toState.requiresLogin;
-            if (requiresLogin && !userService.getAuthUser().sessionId) {
+            if (requiresLogin && !userService.getAuthUser()) {
                 event.preventDefault();
                 $state.go('login');
             }

@@ -12,17 +12,38 @@ angular.module('app.routes', ['ui.router'])
         url:'/home',
         templateUrl: 'home.html',
         controller: 'homeController',
-          requiresLogin:true
+          requiresLogin:true,
+          params:{
+              videoClass:'col-md-6',
+              showOthers: true,
+              enablePlay: true,
+              window: true
+          },
   })
 
       .state('detail',{
           url:'/detail/{videoId}',
-          templateUrl:'detail.html',
-          controller:'detailController',
-          requiresLogin:true
+          requiresLogin:true,
+          params:{
+              videoClass:'col-md-12',
+              showOthers: false,
+              enablePlay: false,
+              window: false
+          },
+          views: {
+              '':{
+                  templateUrl:'detail.html',
+                  controller:'detailController'
+              },
+              'videosList@detail':{
+                  templateUrl: 'home.html',
+                  controller: 'homeController'
+              }
+          }
+
   })
 
-
+// when entering to a not configured state redirects to login
 $urlRouterProvider.otherwise('/login')
 
 });

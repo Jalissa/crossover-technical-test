@@ -1,11 +1,11 @@
+
 .form-signin {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
 }
 
-.form-signin
-.form-signin-heading {
+.form-signin .form-signin-heading {
      margin-bottom: 10px;
 }
 
@@ -15,7 +15,8 @@
     overflow: hidden;
 }
 
-.video-title{
+.video-title,
+video{
     cursor: pointer;
 }
 
@@ -23,7 +24,38 @@
     text-decoration: none;
 }
 
-.detail-video-container{
-    height: 800px;
-    overflow: scroll;
+.video-container{
+    overflow:scroll;
+
 }
+
+.animate-repeat{
+    animation: shake 0.80s;
+}
+.animate-repeat.ng-enter{
+    transition:all linear 0.5s;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+
+
+
+
+

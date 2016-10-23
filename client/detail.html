@@ -1,19 +1,29 @@
-<div class="col-md-9">
-    <div class="panel panel-success" >
-        <div class="panel-heading">
-            <h3 class="panel-title text-center">{{video.name}} </h3>
-        </div>
-        <div class="panel-body">
-            <div class="embed-responsive embed-responsive-16by9">
-                <video ng-src="{{video.url | trustUrl}}"
-                       class="embed-responsive-item videoTag" ng-click="play($event)">
-                    Your browser does not support the video tag.
-                </video>
+<logout></logout>
+<h2 class="text-center">Crossover Video Portal</h2>
+<div class="row">
+    <div class="col-md-9 video-detail-container">
+        <div class="panel panel-success" >
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">{{video.name}} </h3>
+            </div>
+            <div class="panel-body">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <video ng-src="{{video.url | trustUrl}}"
+                           class="embed-responsive-item videoTag" ng-click="play($event)">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            <div class="panel-footer">
+                {{video.ratingAvg}}
+                <p>{{video.description}}</p>
             </div>
         </div>
-        <div class="panel-footer">
-            {{video.ratingAvg}}
-            <p>{{video.description}}</p>
-        </div>
     </div>
+    <div class="col-md-3 video-list-container" >
+        <ui-view name="videosList"></ui-view>
+    </div>
+
 </div>
+
+<script src="js/dom.js"></script>

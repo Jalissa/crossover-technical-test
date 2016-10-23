@@ -1,6 +1,8 @@
+<logout ng-hide="!showOthers"></logout>
+<h2 class="text-center" ng-hide="!showOthers">Crossover Video Portal</h2>
 <div class="alert alert-danger" ng-show="message" role="alert">{{message}}</div>
-<div ng-hide="message" class="video-container" scroll="loadVideos()">
-    <div class="col-md-6" ng-repeat="video in videos track by video._id" >
+<div ng-hide="message" class="video-container" scroll="loadVideos()" window="window">
+    <div ng-class="videoClass" class="animate-repeat" ng-repeat="video in videos track by video._id" >
         <div class="panel panel-success"   >
             <div class="panel-heading video-title">
                 <a ui-sref="detail({videoId : video._id})">
@@ -9,8 +11,8 @@
             </div>
             <div class="panel-body">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <video ng-src="{{video.url | trustUrl}}"
-                           class="embed-responsive-item videoTag" ng-click="play($event)">
+                    <video ng-src="{{video.url | trustUrl}}" id="{{video._id}}"
+                           class="embed-responsive-item videoTag" ng-click="!enablePlay || play($event)">
                         Your browser does not support the video tag.
                     </video>
                 </div>
