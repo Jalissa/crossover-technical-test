@@ -8,7 +8,6 @@ function ($scope, $state, userService) {
     $scope.login = function login(user){
         userService.login(user,
             function(authUser){
-                resetUser(user);
                 if(authUser.status === constants.status.success){
                     $state.go('home');
                 }
@@ -16,7 +15,6 @@ function ($scope, $state, userService) {
                 $scope.message = authUser.error;
             },
             function (err){
-                resetUser(user);
                 $scope.message = err.data.error;
             });
     }
@@ -25,15 +23,11 @@ function ($scope, $state, userService) {
 
         userService.logout({
             sessionId:  userService.getAuthUser().sessionId
-        }, function(response) {
+        }, function() {
             $state.go('login');
         });
     }
 
-    function resetUser(user){
-        user.username = null;
-        user.password = null;
-    }
 
 }])
 
@@ -57,7 +51,7 @@ function ($scope, $state, userService) {
         $scope.window = $stateParams.window;
 
         //function called to get more videos
-        $scope.loadVideos = function (){
+        $scope.loadVideos = function getVideos(){
             //to get the next 10 not loaded videos
             skip += 10;
             loadVideos(skip, limit);
@@ -79,8 +73,7 @@ function ($scope, $state, userService) {
         }
 
         function loadVideos(skip, limit){
-            var sessionId = userService.getAuthUser().sessionId;
-            videoService.get({skip: skip,limit:limit, sessionId: sessionId},
+            videoService.get({skip: skip,limit:limit, sessionId: userService.getAuthUser().sessionId},
                 function(response){
                     if(response.data.status === constants.status.error){
                         $scope.message = response.data.error;

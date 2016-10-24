@@ -44,7 +44,7 @@ angular.module('app.services', ['ngCookies'])
         for(var j = 0; j < video.ratings.length; j++) {
             ratingSum += video.ratings[j];
         }
-        var ratingAvg = ratingSum / video.ratings.length;
+        var ratingAvg = Math.round(ratingSum / video.ratings.length);
         return ratingAvg;
 
     }
