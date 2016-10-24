@@ -21,7 +21,10 @@ module.exports = function(config) {
       'client/components/angular-mocks/angular-mocks.js',
       'client/external/*.js',
       'client/js/*.js',
-      'client/specs/*.spec.js'
+      'client/specs/*.spec.js',
+
+      'client/logout.html',
+      'client/ratings-select.html'
     ],
 
 
@@ -34,7 +37,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'client/js/*.js': 'coverage'
+      'client/js/*.js': 'coverage',
+      'client/*.html': ['ng-html2js']
     },
 
 
@@ -44,9 +48,15 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
 
+    ngHtml2JsPreprocessor: {
+      stripPrefix:'client/',
+      prependPrefix: '../',
+      // the name of the Angular module to create
+      moduleName: "directives.templates"
+    },
+
     // web server port
     port: 9876,
-
 
     // enable / disable colors in the output (reporters and logs)
     colors: true,

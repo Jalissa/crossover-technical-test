@@ -30,7 +30,7 @@ describe('userController testing', function() {
         expect(scope.username).not.toBeNull();
     });
 
-    it('userController login', function(done) {
+    it('userController login', function() {
         spyOn(scope, 'login');
 
         scope.login({
@@ -39,6 +39,23 @@ describe('userController testing', function() {
         });
 
         expect(scope.login).toHaveBeenCalled();
+        expect(scope.message).toBeNull();
+
+    });
+
+    it('userController logout', function() {
+        spyOn(scope, 'logout');
+        spyOn(userService, 'getAuthUser').and.returnValue(
+            {
+                username: 'user',
+                status: 'success',
+                sessionId: 'somehash'
+            });
+        scope.logout({
+            sessionId:  userService.getAuthUser().sessionId
+        });
+
+        expect(scope.logout).toHaveBeenCalled();
         expect(scope.message).toBeNull();
 
     });

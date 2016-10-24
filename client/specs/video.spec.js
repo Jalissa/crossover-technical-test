@@ -47,7 +47,8 @@ describe('video feature testing', function(){
             name: 'video',
             description: 'description',
             ratings: [4,3,4],
-            url: 'url'
+            url: 'url',
+            _id:1
         };
         var videos = [ ];
         for (var i = 0; i < 10; i++) {
@@ -125,6 +126,7 @@ describe('video feature testing', function(){
         it('detailController should exist', function() {
             expect(detailController).toBeDefined();
             expect(scopeDetail.play).toBeDefined();
+            expect(scopeDetail.rate).toBeDefined();
         });
 
         it('detailController message var should be null', function() {
@@ -158,6 +160,22 @@ describe('video feature testing', function(){
             expect(scopeDetail.enablePlay).toBeDefined();
             expect(scopeDetail.videoClass).toBeDefined();
         });
+
+        it('rate function should update video ratingAvg', function() {
+            spyOn(scope, 'rate');
+            scope.rate({
+                rating: 5,
+                videoId: video._id,
+                sessionId: userService.getAuthUser().sessionId
+            });
+
+            video.ratings.push(5);
+            video.ratingAvg = videoService.getRating(video);
+
+            expect(scope.rate).toHaveBeenCalled();
+            expect(parseFloat(video.ratingAvg)).toEqual(4);
+
+        });
     });
 
     describe('videoService testing', function(){
@@ -167,9 +185,16 @@ describe('video feature testing', function(){
             expect(video.ratingAvg).not.toBeDefined();
             video.ratingAvg = videoService.getRating(video);
             expect(video.ratingAvg).toBeDefined();
-            expect(video.ratingAvg).toEqual(4);
+            expect(parseFloat(video.ratingAvg)).toEqual(3.67);
 
         });
+
+        it('rate function should exists', function() {
+            expect(videoService.rate).toBeDefined();
+
+        });
+
+
     });
 
 
