@@ -30,7 +30,7 @@ describe('userController testing', function() {
         expect(scope.username).not.toBeNull();
     });
 
-    it('userController login', function() {
+    it('userController login', function(done) {
         spyOn(scope, 'login');
 
         scope.login({

@@ -44,7 +44,7 @@ angular.module('app.services', ['ngCookies'])
         for(var j = 0; j < video.ratings.length; j++) {
             ratingSum += video.ratings[j];
         }
-        var ratingAvg = Math.round(ratingSum / video.ratings.length);
+        var ratingAvg = (ratingSum / video.ratings.length).toFixed(2);
         return ratingAvg;
 
     }
@@ -55,6 +55,11 @@ angular.module('app.services', ['ngCookies'])
             method: "GET",
             params: query
         }).then(onSuccess, onError);
+    }
+
+    this.rate = function rate(data, onSuccess, onError){
+        $http.post('/video/ratings?sessionId='+data.sessionId,
+            data ).then(onSuccess, onError);
     }
 
 }]);

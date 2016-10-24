@@ -1,33 +1,28 @@
 angular.module('app.directives', [])
 
-.directive('scroll', ['$window','$timeout', function($window){
+.directive('scroll', ['$window', function($window){
     return {
         restrict: 'A',
         scope:{
-            scroll: '&',
-            window:'&'
+            scroll: '&'
         },
         link:function (scope, element, attrs) {
-
-            if(window){
-                angular.element($window).bind('scroll', function () {
-                    if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                        scope.$apply(scope.scroll);
-                    }
-                });
-            }else{
-                element.bind('scroll',function(){
-                    if(Math.round($(this).scrollTop()) + Math.round($(this).outerHeight())  >= this.scrollHeight - 10){
-                        scope.$apply(scope.scroll);
-                    }
-                });
-            }
-
-
-
+            element.bind('scroll',function(){
+                if(Math.round($(this).scrollTop()) + Math.round($(this).outerHeight())  >= this.scrollHeight - 1){
+                    scope.$apply(scope.scroll);
+                }
+            });
         }
     };
 }])
+
+.directive('rating',function(){
+    return {
+        restrict: 'E',
+        templateUrl: '../ratings-select.html',
+        controller: 'detailController'
+    }
+})
 
 .directive('logout',[function(){
     return {

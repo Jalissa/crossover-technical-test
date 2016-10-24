@@ -1,7 +1,7 @@
 <logout ng-hide="!showOthers"></logout>
 <h2 class="text-center" ng-hide="!showOthers">Crossover Video Portal</h2>
 <div class="alert alert-danger" ng-show="message" role="alert">{{message}}</div>
-<div ng-hide="message" class="video-container" scroll="loadVideos()" window="window">
+<div ng-hide="message" class="video-container" scroll="loadVideos()">
     <div ng-class="videoClass" class="animate-repeat" ng-repeat="video in videos track by video._id" >
         <div class="panel panel-success"   >
             <div class="panel-heading video-title">
@@ -18,9 +18,17 @@
                 </div>
             </div>
             <div class="panel-footer">
-                {{video.ratingAvg}}
+                <span class="glyphicon glyphicon-star rating-text" aria-hidden="true">{{video.ratingAvg}}</span>
                <p class="video-description">{{video.description}}</p>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.video-container').css({
+            height: Math.round($(document).height())
+        });
+
+    })
+</script>

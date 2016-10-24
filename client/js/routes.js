@@ -16,8 +16,7 @@ angular.module('app.routes', ['ui.router'])
           params:{
               videoClass:'col-md-6',
               showOthers: true,
-              enablePlay: true,
-              window: true
+              enablePlay: true
           },
   })
 
@@ -27,8 +26,7 @@ angular.module('app.routes', ['ui.router'])
           params:{
               videoClass:'col-md-12',
               showOthers: false,
-              enablePlay: false,
-              window: false
+              enablePlay: false
           },
           views: {
               '':{

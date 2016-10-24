@@ -48,7 +48,6 @@ function ($scope, $state, userService) {
         $scope.showOthers = $stateParams.showOthers;
         $scope.enablePlay = $stateParams.enablePlay;
         $scope.videoClass = $stateParams.videoClass;
-        $scope.window = $stateParams.window;
 
         //function called to get more videos
         $scope.loadVideos = function getVideos(){
@@ -104,7 +103,6 @@ function($scope, userService, videoService, $stateParams){
     $scope.showOthers = $stateParams.showOthers;
     $scope.enablePlay = $stateParams.enablePlay;
     $scope.videoClass = $stateParams.videoClass;
-    $scope.window = $stateParams.window;
 
     getOne();
 
@@ -131,6 +129,25 @@ function($scope, userService, videoService, $stateParams){
             var oneVideo = response.data.data;
             oneVideo.ratingAvg = videoService.getRating(oneVideo);
             $scope.video = oneVideo;
+        }, function(err){
+            $scope.message = err.data.error;
+        });
+    }
+
+    $scope.rate = function rate(){
+        videoService.rate({
+            rating: $scope.selectedRating,
+            videoId: $stateParams.videoId,
+            sessionId: userService.getAuthUser().sessionId
+        }, function(response){
+            if(response.data.status === constants.status.error){
+                $scope.message = response.data.error;
+                return;
+            }
+
+            var rating = response.data.data.ratings;
+            $scope.video.ratings = rating;
+            $scope.video.ratingAvg = videoService.getRating($scope.video);
 
         }, function(err){
             $scope.message = err.data.error;

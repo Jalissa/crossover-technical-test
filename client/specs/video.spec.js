@@ -11,15 +11,13 @@ describe('video feature testing', function(){
         stateParamsHome = {
             showOthers: true,
             enablePlay: true,
-            videoClass: 'col-md-6',
-            window: true
+            videoClass: 'col-md-6'
         };
 
         stateParamsDetail = {
             showOthers: false,
             enablePlay: false,
-            videoClass: 'col-md-12',
-            window: false
+            videoClass: 'col-md-12'
         };
 
         spyOn(userService, 'getAuthUser').and.returnValue(
@@ -71,7 +69,6 @@ describe('video feature testing', function(){
         expect(scope.showOthers).toBeDefined();
         expect(scope.enablePlay).toBeDefined() ;
         expect(scope.videoClass).toBeDefined() ;
-        expect(scope.window).toBeDefined();
 
     });
 
@@ -160,7 +157,6 @@ describe('video feature testing', function(){
             expect(scopeDetail.showOthers).toBeDefined();
             expect(scopeDetail.enablePlay).toBeDefined();
             expect(scopeDetail.videoClass).toBeDefined();
-            expect(scopeDetail.window).toBeDefined();
         });
     });
 
